@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>老王 × 寫作教學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a18;
+    --ink-mid: #4a4a44;
+    --ink-light: #8a8a80;
+    --paper: #f7f5f0;
+    --paper-warm: #ede9e0;
+    --paper-card: #ffffff;
+    --accent: #2c2c28;
+    --accent-line: #c8b89a;
+    --serif: 'Noto Serif TC', serif;
+    --sans: 'Noto Sans TC', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(247,245,240,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(200,184,154,0.3);
+    padding: 0 2rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-brand {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--ink-mid);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--ink); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 7rem 2rem 5rem;
+    max-width: 820px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.1s forwards;
+  }
+
+  .hero-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--ink-light);
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 1.5rem;
+    color: var(--ink);
+  }
+
+  .hero-title span {
+    color: var(--ink-light);
+    font-weight: 400;
+  }
+
+  .hero-body {
+    font-size: 16px;
+    color: var(--ink-mid);
+    max-width: 560px;
+    line-height: 2;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-line {
+    width: 48px;
+    height: 2px;
+    background: var(--accent-line);
+    margin-bottom: 2rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 24px;
+    font-size: 13px;
+    font-family: var(--sans);
+    border-radius: 2px;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+  }
+
+  .btn-primary:hover {
+    background: var(--ink-mid);
+    border-color: var(--ink-mid);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid rgba(26,26,24,0.3);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--ink);
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 5rem 2rem;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--ink-light);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    font-weight: 400;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .section-intro {
+    color: var(--ink-mid);
+    max-width: 560px;
+    margin-bottom: 3rem;
+    font-size: 15px;
+  }
+
+  /* DIVIDER */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, var(--accent-line), transparent);
+    margin-bottom: 4rem;
+  }
+
+  /* SERVICES */
+  #services { background: var(--paper); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1px;
+    background: rgba(200,184,154,0.25);
+    border: 1px solid rgba(200,184,154,0.25);
+  }
+
+  .service-card {
+    background: var(--paper-card);
+    padding: 2rem 1.75rem;
+    transition: background 0.2s;
+    position: relative;
+  }
+
+  .service-card:hover { background: #fdfcf8; }
+
+  .service-number {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent-line);
+    font-weight: 400;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .service-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border: 1px solid rgba(200,184,154,0.6);
+    color: var(--ink-light);
+    border-radius: 1px;
+    margin-bottom: 0.75rem;
+  }
+
+  .service-name {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+    color: var(--ink);
+  }
+
+  .service-desc {
+    font-size: 13.5px;
+    color: var(--ink-mid);
+    line-height: 1.85;
+    margin-bottom: 1.25rem;
+  }
+
+  .service-link {
+    font-size: 12px;
+    color: var(--ink-light);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200,184,154,0.5);
+    padding-bottom: 1px;
+    letter-spacing: 0.04em;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .service-link:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .service-link.tbd {
+    opacity: 0.4;
+    pointer-events: none;
+    cursor: default;
+  }
+
+  .service-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  /* PHILOSOPHY */
+  #philosophy {
+    background: var(--paper-warm);
+  }
+
+  .philosophy-text {
+    max-width: 620px;
+  }
+
+  .philosophy-text p {
+    font-size: 15.5px;
+    color: var(--ink-mid);
+    margin-bottom: 1.2rem;
+    line-height: 2;
+  }
+
+  .blockquote {
+    border-left: 2px solid var(--accent-line);
+    padding: 1rem 0 1rem 1.75rem;
+    margin: 2rem 0;
+  }
+
+  .blockquote p {
+    font-family: var(--serif);
+    font-size: 17px !important;
+    color: var(--ink) !important;
+    line-height: 1.8 !important;
+    font-weight: 400;
+  }
+
+  /* ABOUT */
+  #about { background: var(--paper); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  @media (max-width: 640px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  .about-meta {
+    padding-top: 0.25rem;
+  }
+
+  .about-meta-item {
+    margin-bottom: 1.5rem;
+  }
+
+  .about-meta-label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--ink-light);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .about-meta-value {
+    font-size: 14px;
+    color: var(--ink-mid);
+    line-height: 1.7;
+  }
+
+  .about-body p {
+    font-size: 15px;
+    color: var(--ink-mid);
+    margin-bottom: 1rem;
+    line-height: 2;
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 5rem 2rem;
+  }
+
+  #contact .section-label { color: rgba(247,245,240,0.4); }
+  #contact .section-title { color: var(--paper); }
+  #contact .section-intro { color: rgba(247,245,240,0.6); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .contact-card {
+    border: 1px solid rgba(247,245,240,0.12);
+    padding: 1.5rem;
+    border-radius: 2px;
+    transition: border-color 0.2s;
+  }
+
+  .contact-card:hover { border-color: rgba(247,245,240,0.3); }
+
+  .contact-card-label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: rgba(247,245,240,0.4);
+    display: block;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .contact-card-name {
+    font-family: var(--serif);
+    font-size: 15px;
+    color: var(--paper);
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .contact-card-link {
+    font-size: 12px;
+    color: rgba(247,245,240,0.45);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200,184,154,0.3);
+    padding-bottom: 1px;
+    transition: color 0.2s;
+  }
+
+  .contact-card-link:hover { color: var(--paper); }
+
+  .contact-card-link.tbd {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .invite-note {
+    padding: 1.5rem;
+    border: 1px solid rgba(200,184,154,0.2);
+    border-radius: 2px;
+    max-width: 560px;
+  }
+
+  .invite-note-label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: rgba(200,184,154,0.6);
+    display: block;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .invite-note p {
+    font-size: 13.5px;
+    color: rgba(247,245,240,0.55);
+    line-height: 1.8;
+    margin-bottom: 0.75rem;
+  }
+
+  .invite-note a {
+    font-size: 12px;
+    color: rgba(247,245,240,0.4);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200,184,154,0.3);
+    padding-bottom: 1px;
+    transition: color 0.2s;
+  }
+
+  .invite-note a:hover { color: var(--paper); }
+  .invite-note a.tbd { opacity: 0.3; pointer-events: none; }
+
+  /* FOOTER */
+  footer {
+    background: #111110;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer p {
+    font-size: 12px;
+    color: rgba(247,245,240,0.25);
+    letter-spacing: 0.04em;
+  }
+
+  footer a {
+    font-size: 12px;
+    color: rgba(247,245,240,0.3);
+    text-decoration: none;
+    margin-left: 1.25rem;
+    transition: color 0.2s;
+  }
+
+  footer a:hover { color: rgba(247,245,240,0.7); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* MOBILE */
+  @media (max-width: 640px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { gap: 1.25rem; }
+    .nav-links li:nth-child(n+3) { display: none; }
+    section { padding: 4rem 1.25rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#">老王 × 寫作教學</a>
+  <ul class="nav-links">
+    <li><a href="#services">課程服務</a></li>
+    <li><a href="#philosophy">教學理念</a></li>
+    <li><a href="#about">關於老王</a></li>
+    <li><a href="#contact">聯絡</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">老王 · 寫作教師 · 內容創作者</p>
+  <div class="hero-line"></div>
+  <h1 class="hero-title">
+    寫作，是一件<br>
+    <span>值得被認真對待的事</span>
+  </h1>
+  <p class="hero-body">
+    作文班、線上課、學習歷程顧問、高中國寫家教——從國中到高中，在不同的節點陪學生走過這段路。
+  </p>
+  <div class="hero-cta">
+    <a href="#services" class="btn btn-primary">查看課程與服務</a>
+    <a href="#contact" class="btn btn-ghost">直接聯絡</a>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">課程與服務</p>
+      <h2 class="section-title">目前開設的課程</h2>
+      <p class="section-intro">依學生的學習階段與需求，提供不同形式的寫作指導。個人家教、線上課程、顧問服務均有開設。</p>
+    </div>
+    <div class="section-divider"></div>
+    <div class="services-grid reveal">
+
+      <div class="service-card">
+        <span class="service-number">01</span>
+        <span class="service-tag">暑期課程</span>
+        <h3 class="service-name">2026 暑假作文班<br>假日密集班</h3>
+        <p class="service-desc">系統性訓練寫作思維。從審題、選材到段落結構，每節課都有可帶走的方法。適合國中生或有寫作需求的學生。</p>
+        <div class="service-links">
+          <a href="https://jovial-cajeta-2d939a.netlify.app/writing-class-2026.html" class="service-link" target="_blank" rel="noopener">→ 招生頁面</a>
+          <a href="https://reurl.cc/RY2dWr" class="service-link" target="_blank" rel="noopener">→ 立即報名</a>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <span class="service-number">02</span>
+        <span class="service-tag">線上家教</span>
+        <h3 class="service-name">2026 暑假會考作文<br>非同步線上家教班</h3>
+        <p class="service-desc">專為準備國中會考設計的非同步線上課程。可自主安排時間觀看，搭配作業批改與回饋，兼顧效率與深度。</p>
+        <div class="service-links">
+          <a href="https://jovial-cajeta-2d939a.netlify.app/online-class-2026.html" class="service-link" target="_blank" rel="noopener">→ 課程頁面</a>
+          <a href="https://docs.google.com/forms/d/1721Ndf1rtqbbMm_d9-BJSsDZ4zA71yE2XtXqt9VcmJw/viewform" class="service-link" target="_blank" rel="noopener">→ 立即報名</a>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <span class="service-number">03</span>
+        <span class="service-tag">個人顧問</span>
+        <h3 class="service-name">學習歷程檔案<br>顧問服務</h3>
+        <p class="service-desc">一對一深度陪伴，從素材發掘、脈絡梳理到文字表達，協助高中生寫出真正屬於自己的學習歷程。不代寫，只陪你把自己說清楚。</p>
+        <div class="service-links">
+          <a href="https://jovial-cajeta-2d939a.netlify.app" class="service-link" target="_blank" rel="noopener">→ 服務說明</a>
+          <a href="https://docs.google.com/forms/d/1OTHxKouG8lRl8-Xyir7LVMgi-hfPuxY8Qx_55Nlytg4/viewform" class="service-link" target="_blank" rel="noopener">→ 報名表單</a>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <span class="service-number">04</span>
+        <span class="service-tag">個人家教</span>
+        <h3 class="service-name">學測國寫<br>高中個人家教</h3>
+        <p class="service-desc">依學生現有程度量身規劃，重點放在學測國寫的引導寫作與混合題。訓練閱讀理解與論述能力，不背公式，練真正有用的思考。</p>
+        <a href="https://forms.gle/ekkdRqz47RH4Fnq87" class="service-link" target="_blank" rel="noopener">→ 填寫洽詢表單</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section id="philosophy">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">教學理念</p>
+      <h2 class="section-title">我怎麼理解「教寫作」這件事</h2>
+    </div>
+    <div class="philosophy-text reveal">
+      <p>很多人問我，為什麼要花錢學作文？</p>
+      <p>我的回答通常是：因為你花了十二年學它，卻從來沒有人教你它的邏輯是什麼。</p>
+      <div class="blockquote">
+        <p>作文不是「多寫就會進步」的技能。它有結構，有選材的判斷，有表達的節奏。這些東西是可以被教的——但大多數課堂沒有時間教，只有時間批改。</p>
+      </div>
+      <p>我不相信「感受」能替代「方法」。好文章背後有可以被拆解的結構，好老師的工作是把這個結構講清楚，讓學生在下一次下筆時，腦子裡有路可走。</p>
+      <p>所以我的課不只是改文章，更重要的是示範思考過程——我怎麼讀題、怎麼取捨素材、怎麼判斷一個段落夠不夠有力。這些判斷，是可以學會的。</p>
+      <p>多年的教學與寫作實踐告訴我：有方法的學生，成長速度是可以被看見的。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">關於老王</p>
+      <h2 class="section-title">寫作教師，也是一個持續在寫的人</h2>
+    </div>
+    <div class="about-grid reveal">
+      <div class="about-meta">
+        <div class="about-meta-item">
+          <span class="about-meta-label">身份</span>
+          <span class="about-meta-value">寫作教師<br>內容創作者<br>文學寫作者</span>
+        </div>
+        <div class="about-meta-item">
+          <span class="about-meta-label">YouTube 頻道</span>
+          <span class="about-meta-value">有所知 zhi</span>
+        </div>
+        <div class="about-meta-item">
+          <span class="about-meta-label">專長領域</span>
+          <span class="about-meta-value">會考作文<br>學測國寫<br>學習歷程指導</span>
+        </div>
+      </div>
+      <div class="about-body">
+        <p>長期投入作文教學、學習歷程指導與寫作課程設計，在 YouTube「有所知 zhi」頻道持續分享寫作方法。</p>
+        <p>我理解考場上的壓力，也理解一篇學習歷程在招生端被閱讀的方式。這兩件事是不一樣的，需要不一樣的策略——我可以幫你分辨清楚。</p>
+        <p>教學之外，我也寫散文與小說，參與聖經教學。這些實踐讓我相信：寫作能力的核心，是一個人能否把自己真正想說的話說清楚。</p>
+        <p>寫作這件事，值得被認真對待。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">聯絡與報名</p>
+      <h2 class="section-title">有興趣的服務，歡迎直接查看</h2>
+      <p class="section-intro">各項課程與服務的詳細說明、費用與報名方式，請點選以下連結。</p>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="contact-card">
+        <span class="contact-card-label">暑期課程</span>
+        <p class="contact-card-name">2026 暑假作文班・假日密集班</p>
+        <a href="https://jovial-cajeta-2d939a.netlify.app/writing-class-2026.html" class="contact-card-link" target="_blank" rel="noopener">招生頁面 →</a>
+      </div>
+      <div class="contact-card">
+        <span class="contact-card-label">線上家教</span>
+        <p class="contact-card-name">會考作文非同步線上班</p>
+        <a href="https://jovial-cajeta-2d939a.netlify.app/online-class-2026.html" class="contact-card-link" target="_blank" rel="noopener">課程頁面 →</a>
+      </div>
+      <div class="contact-card">
+        <span class="contact-card-label">個人顧問</span>
+        <p class="contact-card-name">學習歷程檔案顧問服務</p>
+        <a href="https://docs.google.com/forms/d/1OTHxKouG8lRl8-Xyir7LVMgi-hfPuxY8Qx_55Nlytg4/viewform" class="contact-card-link" target="_blank" rel="noopener">報名表單 →</a>
+      </div>
+      <div class="contact-card">
+        <span class="contact-card-label">個人家教</span>
+        <p class="contact-card-name">學測國寫高中家教</p>
+        <a href="https://forms.gle/ekkdRqz47RH4Fnq87" class="contact-card-link" target="_blank" rel="noopener">填寫洽詢表單 →</a>
+      </div>
+    </div>
+
+    <div class="invite-note reveal">
+      <span class="invite-note-label">其他合作邀約</span>
+      <p>如果你有開班邀約、課程合作、演講或工作坊等需求，歡迎透過洽詢表單聯繫。</p>
+      <a href="https://forms.gle/ekkdRqz47RH4Fnq87" target="_blank" rel="noopener">填寫洽詢表單 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 老王 × 寫作教學</p>
+  <div>
+    <a href="https://www.youtube.com/@zhi8339" target="_blank" rel="noopener">YouTube：有所知 zhi</a>
+    <a href="https://www.facebook.com/profile.php?id=100069604945285" target="_blank" rel="noopener">Facebook 粉絲團</a>
+    <a href="https://forms.gle/ekkdRqz47RH4Fnq87" target="_blank" rel="noopener">洽詢表單</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
